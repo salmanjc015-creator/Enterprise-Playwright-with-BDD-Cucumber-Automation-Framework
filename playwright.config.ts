@@ -16,7 +16,7 @@ export default defineConfig({
   expect: {
     timeout: 10000
   },
-  fullyParallel: false, // Run scenarios sequentially or in controlled parallel
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : 1,
@@ -27,7 +27,8 @@ export default defineConfig({
       'reporting-labs',
       {
         title: 'Playwright BDD Enterprise Automation Report',
-        outputDir: 'reports/reporting-labs'
+        outputDir: 'reports/reporting-labs',
+        warnMissingMeta: false
       }
     ],
     ['html', { outputFolder: 'reports/playwright-html', open: 'never' }]
@@ -47,6 +48,22 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] }
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] }
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] }
+    },
+    {
+      name: 'mobile-chrome',
+      use: { ...devices['Pixel 7'] }
+    },
+    {
+      name: 'mobile-safari',
+      use: { ...devices['iPhone 14'] }
     }
   ]
 });

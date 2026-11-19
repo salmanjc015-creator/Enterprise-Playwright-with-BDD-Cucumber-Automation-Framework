@@ -19,6 +19,10 @@ export class SauceInventoryPage extends BasePage {
     this.cartLink = page.locator('[data-test="shopping-cart-link"]');
   }
 
+  async open(): Promise<void> {
+    await this.goto('https://www.saucedemo.com/inventory.html');
+  }
+
   async expectLoaded(): Promise<void> {
     await expect(this.page).toHaveURL(/inventory\.html/);
     await expect(this.pageTitle).toHaveText('Products');

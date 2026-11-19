@@ -1,0 +1,9 @@
+node_modules/
+.features-gen/
+reports/
+reporting-labs/
+test-results/
+.auth/
+.git/
+*.log
+.env
