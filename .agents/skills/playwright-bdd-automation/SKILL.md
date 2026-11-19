@@ -9,6 +9,27 @@ This skill provides the standard procedures, architectural conventions, and vali
 
 ---
 
+## 🛑 Strict Grounding Rules (Zero Tolerance)
+
+Before executing or writing any automation code, follow these non-negotiable rules:
+
+1. **DO NOT INVENT ANYTHING**:
+   * Never invent non-existent Playwright methods (e.g. `page.clickAndWait()`, `page.waitForElement()`, `page.type()`).
+   * Never invent arbitrary element locators or DOM attributes without inspecting real application source or live DOM.
+   * Never import uninstalled external libraries (e.g. `axios`, `supertest`) when Playwright has built-in primitives (`request`, `expect`).
+
+2. **DO NOT ASSUME**:
+   * Never assume element IDs, classes, roles, or attributes.
+   * Never assume backend response schemas, status codes, or payload formats.
+   * Never assume network speeds or page readiness by adding artificial `sleep()` or `waitForTimeout()`. Rely strictly on Web-First auto-waiting.
+
+3. **IF INFO IS MISSING: STATE "INSUFFICIENT INFO TO DETERMINE"**:
+   * If a required locator, API endpoint contract, credential, or business acceptance criterion is missing, ambiguous, or unverifiable:
+   * **STOP immediately**. Do not improvise, mock, or invent placeholders.
+   * Explicitly report: `🛑 INSUFFICIENT INFO TO DETERMINE: <specify exact missing detail>`.
+
+---
+
 ## 🏛️ Architecture Overview
 
 Always maintain strict separation of concerns across layers:
@@ -98,8 +119,11 @@ npx playwright test --grep "@smoke"
 ## 🛡️ Anti-Hallucination & Quality Checklist
 
 Before completing any task:
-1. [ ] **No `page.waitForTimeout()` or `sleep()`**: All waits rely on auto-waiting or `await expect(locator)`.
-2. [ ] **Web-First Assertions**: All assertions use `await expect(locator)...` matchers.
-3. [ ] **Zero Selectors in Steps**: Steps only call methods on injected Page Objects / fixtures.
-4. [ ] **Dynamic Data**: Test inputs use `FakerData` rather than hardcoded static strings.
-5. [ ] **Step Synchronization**: Running `npx bddgen` completes with code `0` and generates matching `.features-gen/` specs.
+1. [ ] **No Invention**: Did not invent any non-existent APIs, locators, or methods.
+2. [ ] **No Assumptions**: Did not assume element selectors or backend schemas without verified evidence.
+3. [ ] **Missing Info Flagged**: If anything was ambiguous, flagged as "Insufficient info to determine" instead of guessing.
+4. [ ] **No `page.waitForTimeout()` or `sleep()`**: All waits rely on auto-waiting or `await expect(locator)`.
+5. [ ] **Web-First Assertions**: All assertions use `await expect(locator)...` matchers.
+6. [ ] **Zero Selectors in Steps**: Steps only call methods on injected Page Objects / fixtures.
+7. [ ] **Dynamic Data**: Test inputs use `FakerData` rather than hardcoded static strings.
+8. [ ] **Step Synchronization**: Running `npx bddgen` completes with code `0` and generates matching `.features-gen/` specs.
