@@ -1,4 +1,7 @@
+import { APIResponse, Page } from '@playwright/test';
 import { test as base } from 'playwright-bdd';
+import { ProductsApiClient } from '../api/automationexercise/ProductsApiClient';
+import { UserApiClient } from '../api/automationexercise/UserApiClient';
 import { AeContactUsPage } from '../pages/automationexercise/ContactUsPage';
 import { AeHomePage } from '../pages/automationexercise/HomePage';
 import { AeProductsPage } from '../pages/automationexercise/ProductsPage';
@@ -9,6 +12,7 @@ import { SauceCartPage } from '../pages/saucedemo/CartPage';
 import { SauceCheckoutPage } from '../pages/saucedemo/CheckoutPage';
 import { SauceInventoryPage } from '../pages/saucedemo/InventoryPage';
 import { SauceLoginPage } from '../pages/saucedemo/LoginPage';
+import { A11yHelper } from './a11yHelper';
 import {
   CheckoutCustomerData,
   ContactUsFormData,
@@ -16,6 +20,7 @@ import {
   WebTableEmployeeData
 } from './fakerData';
 import { LoginFixture } from './loginFixture';
+import { SessionManager } from './sessionManager';
 
 export interface ScenarioState {
   checkoutCustomer?: CheckoutCustomerData;
@@ -24,6 +29,13 @@ export interface ScenarioState {
   textBoxUser?: TextBoxUserData;
   webTableEmployee?: WebTableEmployeeData;
   promptValue?: string;
+  // API Scenario State
+  apiResponse?: APIResponse;
+  apiResponseBody?: any;
+  // Hybrid Scenario State
+  hybridProduct?: { name: string; price: string };
+  // Mock Scenario State
+  mockResponse?: { status: number; body: any };
 }
 
 type AppFixtures = {
@@ -31,6 +43,17 @@ type AppFixtures = {
   loginFixture: LoginFixture;
   authenticatedInventoryPage: SauceInventoryPage;
   scenarioState: ScenarioState;
+
+  // Accessibility Audit Fixture
+  a11yHelper: A11yHelper;
+
+  // Session Reuse Fixtures (Playwright storageState)
+  sessionPage: Page;
+  sessionInventoryPage: SauceInventoryPage;
+
+  // API Client Fixtures
+  productsApiClient: ProductsApiClient;
+  userApiClient: UserApiClient;
 
   // SauceDemo Pages
   sauceLoginPage: SauceLoginPage;
@@ -76,6 +99,40 @@ export const test = base.extend<AppFixtures>({
 
   scenarioState: async ({}, use) => {
     await use({});
+  },
+
+  // Accessibility Auditor Fixture
+  a11yHelper: async ({ page }, use) => {
+    await use(new A11yHelper(page));
+  },
+
+  // API Client Fixtures (powered by Playwright's built-in request fixture)
+  productsApiClient: async ({ request }, use) => {
+    await use(new ProductsApiClient(request));
+  },
+
+  userApiClient: async ({ request }, use) => {
+    await use(new UserApiClient(request));
+  },
+
+  // StorageState Session Reuse Fixture
+  sessionPage: async ({ browser }, use) => {
+    const storageStatePath = SessionManager.ensureSauceDemoSession('standard_user');
+    const context = await browser.newContext({ storageState: storageStatePath });
+    await context.route('**/*', (route) => {
+      const url = route.request().url();
+      if (BLOCKED_AD_DOMAINS.some((domain) => url.includes(domain))) {
+        return route.abort();
+      }
+      return route.continue();
+    });
+    const page = await context.newPage();
+    await use(page);
+    await context.close();
+  },
+
+  sessionInventoryPage: async ({ sessionPage }, use) => {
+    await use(new SauceInventoryPage(sessionPage));
   },
 
   loginFixture: async ({ page }, use) => {

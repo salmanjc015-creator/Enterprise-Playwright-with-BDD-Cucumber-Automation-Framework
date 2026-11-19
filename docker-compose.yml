@@ -1,0 +1,13 @@
+services:
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: playwright-bdd-runner
+    environment:
+      - CI=true
+      - HEADLESS=true
+    volumes:
+      - ./reports:/app/reports
+      - ./test-results:/app/test-results
+    command: npm test

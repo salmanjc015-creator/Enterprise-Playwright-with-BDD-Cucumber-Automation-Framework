@@ -4,9 +4,13 @@ node_modules/
 # Playwright-BDD generated test files
 .features-gen/
 
+# Playwright storageState auth files
+.auth/
+
 # Reports & Playwright artifacts
 reports/
 reporting-labs/
+reporting-labs.history.json
 test-results/
 playwright-report/
 blob-report/
