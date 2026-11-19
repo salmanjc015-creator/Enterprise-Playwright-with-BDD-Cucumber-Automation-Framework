@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Playwright-BDD generated test files
+.features-gen/
+
+# Reports & Playwright artifacts
+reports/
+reporting-labs/
+test-results/
+playwright-report/
+blob-report/
+
+# Environment variables
+.env
+
+# Logs & OS / IDE files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

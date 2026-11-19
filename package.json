@@ -1,0 +1,40 @@
+{
+  "name": "playwright-bdd-automation",
+  "version": "1.0.0",
+  "description": "Playwright + TypeScript + Cucumber BDD (playwright-bdd) Page Object Model automation framework with Login Fixtures, Faker Data utilities, and Reporting Labs HTML reporting across SauceDemo, Automation Exercise, and DemoQA.",
+  "private": true,
+  "scripts": {
+    "bddgen": "bddgen",
+    "test": "bddgen && playwright test",
+    "test:smoke": "bddgen && playwright test --grep @smoke",
+    "test:saucedemo": "bddgen && playwright test --grep @saucedemo",
+    "test:automationexercise": "bddgen && playwright test --grep @automationexercise",
+    "test:demoqa": "bddgen && playwright test --grep @demoqa",
+    "test:headed": "bddgen && playwright test --headed",
+    "test:ui": "bddgen && playwright test --ui",
+    "typecheck": "tsc --noEmit",
+    "clean": "node -e \"const fs=require('fs');['.features-gen','reports','test-results'].forEach(d=>fs.rmSync(d,{recursive:true,force:true}));\""
+  },
+  "keywords": [
+    "playwright",
+    "playwright-bdd",
+    "cucumber",
+    "bdd",
+    "pom",
+    "typescript",
+    "faker",
+    "reporting-labs",
+    "test-automation",
+    "qa-portfolio"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^9.4.0",
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.10.0",
+    "dotenv": "^16.4.7",
+    "playwright-bdd": "^8.2.0",
+    "reporting-labs": "latest",
+    "typescript": "^5.7.3"
+  }
+}
