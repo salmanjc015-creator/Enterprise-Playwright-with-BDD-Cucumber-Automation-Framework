@@ -15,7 +15,7 @@ permissions:
 jobs:
   test:
     name: Run BDD Regression Suite
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
 
     steps:
@@ -31,8 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers with OS dependencies
-        run: npx playwright install --with-deps chromium
+      - name: Install Playwright browsers
+        run: |
+          npx playwright install --with-deps chromium || npx playwright install chromium
 
       - name: Run Playwright BDD tests
         run: npm test
