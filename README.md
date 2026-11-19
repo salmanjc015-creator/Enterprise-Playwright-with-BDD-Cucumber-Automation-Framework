@@ -6,6 +6,7 @@
 [![WCAG 2.1 AA](https://img.shields.io/badge/Accessibility-Axe_Core_WCAG_2.1_AA-7B1FA2?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![Docker Ready](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](Dockerfile)
 [![Reporting Labs](https://img.shields.io/badge/Reporting_Labs-Single_File_HTML-FF6F00?style=for-the-badge)](https://reportinglabs.dev)
+[![Live Report](https://img.shields.io/badge/Live_Report-GitHub_Pages-brightgreen?style=for-the-badge&logo=github)](https://salmanjc015-creator.github.io/playwright-bdd-automation/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 An enterprise-grade, portfolio-ready test automation framework built with **Playwright**, **TypeScript**, **`playwright-bdd`** (Cucumber Gherkin), the **Page Object Model (POM)**, and the **Service Object Model**. Designed to demonstrate production-level testing standards across E2E UI journeys, REST APIs, accessibility compliance, visual layout regression, network fault injection, and containerized CI/CD execution.
