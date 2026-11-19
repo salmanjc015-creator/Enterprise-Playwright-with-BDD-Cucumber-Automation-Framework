@@ -163,17 +163,4 @@ docker compose up --build --exit-code-from test-runner
 
 # View generated reports on your host machine
 open reports/reporting-labs/index.html
-```
 
----
-
-## 💼 Recruiter & Resume Highlights
-
-Copy-paste these bullet points directly into your resume or LinkedIn profile:
-
-* **Engineered an enterprise-grade UI & REST API test automation framework** using Playwright, TypeScript, and Cucumber BDD (`playwright-bdd`), achieving 100% test scenario automation across multi-app architectures.
-* **Integrated automated WCAG 2.1 AA accessibility audits** into the test pipeline using `@axe-core/playwright`, detecting critical a11y violations during functional test runs.
-* **Implemented network route interception and fault injection** (`page.route()`), simulating HTTP 500 server crashes and dynamic mock responses to test frontend resiliency without backend dependencies.
-* **Optimized test execution time by 50%+** by implementing Playwright `storageState` session caching, completely bypassing repetitive UI authentication flows.
-* **Architected Hybrid UI + REST API workflows** using Playwright's native `APIRequestContext`, establishing contract consistency checks between backend REST endpoints and frontend DOM rendering.
-* **Dockerized the test suite** using official Microsoft Playwright images and created a GitHub Actions CI/CD pipeline deploying live test reports to GitHub Pages on every release.
